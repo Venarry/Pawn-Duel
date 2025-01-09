@@ -6,6 +6,7 @@ using UnityEngine;
 public class LevelSpawner : MonoBehaviour
 {
     [SerializeField] private RectTransform _grid;
+    [SerializeField] private PlayerStepHandler _playerStepHandler;
     [SerializeField] private Cell _cellPrefab;
 
     private LevelBarriersModel _levelBarriersModel;
@@ -48,7 +49,7 @@ public class LevelSpawner : MonoBehaviour
             for (int j = 0; j < currentLevel.Size.x; j++)
             {
                 Cell cell = Instantiate(_cellPrefab, _grid.transform);
-                cell.Init(_levelBarriersModel, new Vector2Int(i, j));
+                cell.Init(_playerStepHandler, _levelBarriersModel, new Vector2Int(i, j));
                 cell.gameObject.name = $"Cell({i}{j})";
 
                 if(i == 0)

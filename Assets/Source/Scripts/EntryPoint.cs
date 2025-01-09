@@ -6,6 +6,7 @@ public class EntryPoint : MonoBehaviour
     [SerializeField] private LevelCycleHandler _levelCycleHandler;
     [SerializeField] private LevelsDataSource _levelsDataSource;
     [SerializeField] private BarriersView _barriersView;
+    [SerializeField] private PlayerStepHandler _playerStepHandler;
 
     private void Awake()
     {
@@ -16,6 +17,7 @@ public class EntryPoint : MonoBehaviour
         _levelSpawner.Init(levelBarriersModel, _levelsDataSource.Levels);
         _barriersView.Init(levelBarriersModel);
         _barriersView.Enable();
+        _playerStepHandler.Init(levelBarriersModel);
 
         _levelSpawner.SpawnNextLevel();
     }

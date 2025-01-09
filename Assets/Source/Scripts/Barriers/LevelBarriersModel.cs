@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class LevelBarriersModel
 {
-    private readonly List<BarrierData> _barriers = new();
+    private readonly List<Vector2> _barriers = new();
     private int _rowCount;
     private int _columnsCount;
 
-    public BarrierData[] Barriers => _barriers.ToArray();
+    public Vector2[] Barriers => _barriers.ToArray();
 
     public event Action<Vector2Int, Vector2Int, Vector2Int, Vector2, Vector2, BarrierOrientration> ProjectionSet;
     public event Action<Vector2Int, Vector2Int, Vector2Int, Vector2, Vector2, BarrierOrientration> BarrierAdd;
@@ -30,36 +30,15 @@ public class LevelBarriersModel
             out Vector2Int secondCellPosition,
             out Vector2Int thirdCellPosition);
 
-        BarrierData barrierData = new(firstWall, secondWall);
-        _barriers.Add(barrierData);
+        //BarrierData barrierData = new(firstWall, secondWall);
+        _barriers.Add(firstWall);
+        _barriers.Add(secondWall);
 
         BarrierAdd?.Invoke(gridPosition, secondCellPosition, thirdCellPosition, firstWall, secondWall, barrierOrientration);
     }
 
     public void TryApplyProjection(Vector2Int gridPosition, BarrierOrientration barrierOrientration)
     {
-        /*Vector2 firstWall;
-        Vector2 secondWall;
-        Vector2Int secondCellPosition;
-        Vector2Int thirdCellPosition;
-
-        if (barrierOrientration == BarrierOrientration.Vertical)
-        {
-            firstWall = new Vector2(gridPosition.x + 0.5f, gridPosition.y + 0.5f);
-            secondWall = new Vector2(gridPosition.x + 1.5f, gridPosition.y + 0.5f);
-
-            secondCellPosition = new Vector2Int(gridPosition.x, gridPosition.y + 1);
-            thirdCellPosition = new Vector2Int(gridPosition.x + 1, gridPosition.y + 1);
-        }
-        else
-        {
-            firstWall = new Vector2(gridPosition.x + 0.5f, gridPosition.y + 0.5f);
-            secondWall = new Vector2(gridPosition.x + 0.5f, gridPosition.y + 1.5f);
-
-            secondCellPosition = new Vector2Int(gridPosition.x + 1, gridPosition.y);
-            thirdCellPosition = new Vector2Int(gridPosition.x + 1, gridPosition.y + 1);
-        }*/
-
         ApplyWalls(
             gridPosition, barrierOrientration,
             out Vector2 firstWall,
@@ -78,23 +57,18 @@ public class LevelBarriersModel
         out Vector2Int secondCellPosition,
         out Vector2Int thirdCellPosition)
     {
-        firstWall = default;
-        secondWall = default;
-        secondCellPosition = default;
-        thirdCellPosition = default;
-
         if (barrierOrientration == BarrierOrientration.Vertical)
         {
-            firstWall = new Vector2(gridPosition.x + 0.5f, gridPosition.y + 0.5f);
-            secondWall = new Vector2(gridPosition.x + 1.5f, gridPosition.y + 0.5f);
+            firstWall = new Vector2(gridPosition.x + 0f, gridPosition.y + 0.5f);
+            secondWall = new Vector2(gridPosition.x + 1f, gridPosition.y + 0.5f);
 
             secondCellPosition = new Vector2Int(gridPosition.x, gridPosition.y + 1);
             thirdCellPosition = new Vector2Int(gridPosition.x + 1, gridPosition.y + 1);
         }
         else
         {
-            firstWall = new Vector2(gridPosition.x + 0.5f, gridPosition.y + 0.5f);
-            secondWall = new Vector2(gridPosition.x + 0.5f, gridPosition.y + 1.5f);
+            firstWall = new Vector2(gridPosition.x + 0.5f, gridPosition.y + 0f);
+            secondWall = new Vector2(gridPosition.x + 0.5f, gridPosition.y + 1f);
 
             secondCellPosition = new Vector2Int(gridPosition.x + 1, gridPosition.y);
             thirdCellPosition = new Vector2Int(gridPosition.x + 1, gridPosition.y + 1);

@@ -152,6 +152,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _grid: {fileID: 236988268}
+  _playerStepHandler: {fileID: 846031996}
   _cellPrefab: {fileID: -1862814043862074014, guid: f2e5fa8ea5e90844d82c1a32c00bfbb4, type: 3}
 --- !u!4 &67918172
 Transform:
@@ -631,6 +632,7 @@ MonoBehaviour:
   _levelCycleHandler: {fileID: 625000012}
   _levelsDataSource: {fileID: 1113134532}
   _barriersView: {fileID: 1811744424}
+  _playerStepHandler: {fileID: 846031996}
 --- !u!4 &841819569
 Transform:
   m_ObjectHideFlags: 0

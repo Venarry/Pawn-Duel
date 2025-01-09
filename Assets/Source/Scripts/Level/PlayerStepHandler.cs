@@ -1,22 +1,31 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 public class PlayerStepHandler : MonoBehaviour
 {
     [SerializeField] private GameObject _barrierButtonsParent;
     private Cell[] _activeAvailableWays;
     private Character _activeCharacter;
+    private LevelBarriersModel _levelBarriersModel;
+    private Dictionary<Vector2Int, Cell> _levelCells;
 
     public event Action StepEnded;
 
+    public void Init(LevelBarriersModel levelBarriersModel)
+    {
+        _levelBarriersModel = levelBarriersModel;
+    }
+
     public void StartStep(Dictionary<Vector2Int, Cell> levelCells, Character player)
     {
+        _levelCells = levelCells;
         _activeCharacter = player;
         _barrierButtonsParent.SetActive(true);
 
-        _activeAvailableWays = GetAvailableCellsForMove(levelCells, player.GridPosition);
+        _activeAvailableWays = GetAvailableCellsForMove(_levelCells, _activeCharacter.GridPosition);
 
         foreach (Cell cell in _activeAvailableWays)
         {
@@ -24,6 +33,21 @@ public class PlayerStepHandler : MonoBehaviour
         }
 
         _activeCharacter.PositionChanged += OnPositionChange;
+    }
+
+    public void RefreshLights()
+    {
+        foreach (Cell cell in _activeAvailableWays)
+        {
+            cell.TurnOffCell();
+        }
+
+        _activeAvailableWays = GetAvailableCellsForMove(_levelCells, _activeCharacter.GridPosition);
+
+        foreach (Cell cell in _activeAvailableWays)
+        {
+            cell.HighlightCell();
+        }
     }
 
     private void OnPositionChange()
@@ -46,6 +70,12 @@ public class PlayerStepHandler : MonoBehaviour
     private Cell[] GetAvailableCellsForMove(Dictionary<Vector2Int, Cell> source, Vector2Int gridPosition)
     {
         List<Cell> availableCells = new();
+        Vector2[] barriers = _levelBarriersModel.Barriers;
+
+        foreach (Vector2 item in barriers)
+        {
+            Debug.Log(item);
+        }
 
         foreach (KeyValuePair<Vector2Int, Cell> cell in source)
         {
@@ -61,7 +91,6 @@ public class PlayerStepHandler : MonoBehaviour
                 continue;
             }
 
-            //Debug.Log($"{movePosition} {currentCellPosition}; {movePosition.x - currentCellPosition.x} {movePosition.y - currentCellPosition.y}");
             int moveDistance = 1;
 
             if (gridPosition.x != currentCellPosition.x && gridPosition.y != currentCellPosition.y)
@@ -75,6 +104,11 @@ public class PlayerStepHandler : MonoBehaviour
             }
 
             if (Mathf.Abs(gridPosition.x - currentCellPosition.x) > moveDistance)
+            {
+                continue;
+            }
+
+            if(barriers.Contains(((Vector2)gridPosition + (Vector2)currentCellPosition) / 2f) == true)
             {
                 continue;
             }
