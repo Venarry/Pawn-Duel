@@ -49,7 +49,7 @@ public class LevelSpawner : MonoBehaviour
             {
                 Cell cell = Instantiate(_cellPrefab, _grid.transform);
                 cell.SetGridPosition(new Vector2Int(i, j));
-
+                cell.gameObject.name = $"Cell({i}{j})";
                 if(i == 0)
                 {
                     cell.SetWinCondition(isPlayerWinCell: true);

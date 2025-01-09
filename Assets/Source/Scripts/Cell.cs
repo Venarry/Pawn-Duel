@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class Cell : MonoBehaviour, IDropHandler
+public class Cell : MonoBehaviour, IDropHandler, IPointerEnterHandler
 {
     [SerializeField] private Image _mainImage;
     [SerializeField] private Image _winImage;
@@ -90,6 +90,17 @@ public class Cell : MonoBehaviour, IDropHandler
         if (eventData.pointerDrag.TryGetComponent(out Character character))
         {
             character.SetPosition(transform.position, GridPosition);
+        }
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (eventData.pointerDrag == null)
+            return;
+
+        if(eventData.pointerDrag.TryGetComponent(out BarrierButtonHandler barrierButtonHandler))
+        {
+
         }
     }
 }

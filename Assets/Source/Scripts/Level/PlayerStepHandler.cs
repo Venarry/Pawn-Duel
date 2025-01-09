@@ -38,6 +38,7 @@ public class PlayerStepHandler : MonoBehaviour
             cell.TurnOffCell();
         }
 
+        _barrierButtonsParent.SetActive(false);
         _activeCharacter.PositionChanged -= OnPositionChange;
         StepEnded?.Invoke();
     }
