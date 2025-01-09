@@ -165,3 +165,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _mainImage: {fileID: 8490659466237057058}
+  _highlightColor: {r: 1, g: 0.94803953, b: 0.33490568, a: 1}

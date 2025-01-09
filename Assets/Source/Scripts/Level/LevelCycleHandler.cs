@@ -61,7 +61,7 @@ public class LevelCycleHandler : MonoBehaviour
 
         foreach (Cell item in GetAvailableCellsForMove(cells, _playerPosition))
         {
-            item.Block();
+            item.HighlightCell();
         } 
     }
 

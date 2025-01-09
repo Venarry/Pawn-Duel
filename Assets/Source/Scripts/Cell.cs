@@ -6,9 +6,17 @@ using UnityEngine.UI;
 public class Cell : MonoBehaviour
 {
     [SerializeField] private Image _mainImage;
+    [SerializeField] private Color _highlightColor = Color.yellow;
+
+    private Color _startColor;
 
     public Vector2Int Position { get; private set; } = Vector2Int.zero;
     public bool IsBlocked { get; private set; } = false;
+
+    private void Awake()
+    {
+        _startColor = _mainImage.color;
+    }
 
     public void SetPosition(Vector2Int position)
     {
@@ -17,12 +25,37 @@ public class Cell : MonoBehaviour
 
     public void Block()
     {
-        Color blockColor = _mainImage.color;
+        if (IsBlocked == true)
+        {
+            return;
+        }
+
+        Color blockColor = _startColor;
 
         float darkMultiplier = 0.8f;
         blockColor *= darkMultiplier;
 
         _mainImage.color = blockColor;
         IsBlocked = true;
+    }
+
+    public void HighlightCell()
+    {
+        if (IsBlocked == true)
+        {
+            return;
+        }
+
+        _mainImage.color = _highlightColor;
+    }
+
+    public void TurnOffCell()
+    {
+        if (IsBlocked == true)
+        {
+            return;
+        }
+
+        _mainImage.color = _startColor;
     }
 }
