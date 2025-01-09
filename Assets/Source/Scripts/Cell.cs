@@ -8,6 +8,7 @@ public class Cell : MonoBehaviour, IDropHandler, IPointerEnterHandler
     [SerializeField] private Image _winImage;
     [SerializeField] private Color _highlightColor = Color.yellow;
 
+    private LevelBarriersModel _levelBarriersModel;
     private Color _startColor;
     private bool _isActive = false;
     
@@ -37,8 +38,9 @@ public class Cell : MonoBehaviour, IDropHandler, IPointerEnterHandler
         }
     }
 
-    public void SetGridPosition(Vector2Int position)
+    public void Init(LevelBarriersModel levelBarriersModel, Vector2Int position)
     {
+        _levelBarriersModel = levelBarriersModel;
         GridPosition = position;
     }
 
@@ -100,7 +102,9 @@ public class Cell : MonoBehaviour, IDropHandler, IPointerEnterHandler
 
         if(eventData.pointerDrag.TryGetComponent(out BarrierButtonHandler barrierButtonHandler))
         {
-
+            BarrierOrientration barrierOrientration = barrierButtonHandler.Orientration;
+            //_levelBarriersModel.Add(GridPosition, barrierOrientration);
+            _levelBarriersModel.TryAddProjection(GridPosition, barrierOrientration);
         }
     }
 }

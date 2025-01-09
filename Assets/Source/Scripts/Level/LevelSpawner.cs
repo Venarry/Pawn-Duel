@@ -1,17 +1,14 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.UIElements;
 
 public class LevelSpawner : MonoBehaviour
 {
     [SerializeField] private RectTransform _grid;
     [SerializeField] private Cell _cellPrefab;
 
+    private LevelBarriersModel _levelBarriersModel;
     private readonly Dictionary<Vector2Int, Cell> _cells = new();
     private Vector2 _cellSize = new(100, 100);
     private Vector2 _spacing = new(10, 10);
@@ -20,10 +17,13 @@ public class LevelSpawner : MonoBehaviour
     private LevelData[] _levels;
     private int _activeLevelIndex = 0;
 
+    public Dictionary<Vector2Int, Cell> Cells => _cells.ToDictionary(c => c.Key, s => s.Value);
+
     public event Action<Dictionary<Vector2Int, Cell>, LevelData> LevelSpawned;
 
-    public void Init(LevelData[] levels)
+    public void Init(LevelBarriersModel levelBarriersModel, LevelData[] levels)
     {
+        _levelBarriersModel = levelBarriersModel;
         _padding = new(10, 10, 10, 10);
         _levels = levels;
     }
@@ -48,8 +48,9 @@ public class LevelSpawner : MonoBehaviour
             for (int j = 0; j < currentLevel.Size.x; j++)
             {
                 Cell cell = Instantiate(_cellPrefab, _grid.transform);
-                cell.SetGridPosition(new Vector2Int(i, j));
+                cell.Init(_levelBarriersModel, new Vector2Int(i, j));
                 cell.gameObject.name = $"Cell({i}{j})";
+
                 if(i == 0)
                 {
                     cell.SetWinCondition(isPlayerWinCell: true);

@@ -1,11 +1,12 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class BarrierButtonHandler : MonoBehaviour, IDragHandler, IEndDragHandler, IBeginDragHandler
+public partial class BarrierButtonHandler : MonoBehaviour, IDragHandler, IEndDragHandler, IBeginDragHandler
 {
     [SerializeField] private GameObject _barrierPrefab;
     [SerializeField] private Transform _canvas;
-    [SerializeField] private BarrierOrientration _orientration;
+
+    [field: SerializeField] public BarrierOrientration Orientration { get; private set; }
 
     private GameObject _activeBarrier;
 
@@ -14,8 +15,6 @@ public class BarrierButtonHandler : MonoBehaviour, IDragHandler, IEndDragHandler
         _activeBarrier = Instantiate(_barrierPrefab, _canvas);
         _activeBarrier.GetComponent<RectTransform>().position = eventData.pressPosition;
         _activeBarrier.GetComponent<CanvasGroup>().blocksRaycasts = true;
-
-        Debug.Log(eventData.pressPosition);
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -28,11 +27,5 @@ public class BarrierButtonHandler : MonoBehaviour, IDragHandler, IEndDragHandler
         _activeBarrier.GetComponent<CanvasGroup>().blocksRaycasts = true;
 
         Destroy(_activeBarrier);
-    }
-
-    public enum BarrierOrientration
-    {
-        Horizontal,
-        Vertical,
     }
 }
