@@ -54,6 +54,7 @@ public class LevelSpawner : MonoBehaviour
                     cell.Block();
                 }
 
+                cell.SetGridPosition(new Vector2Int(i, j));
                 _venarryGrid.AddElement(cell.GetComponent<RectTransform>());
 
                 _cells.Add(new Vector2Int(i, j), cell);

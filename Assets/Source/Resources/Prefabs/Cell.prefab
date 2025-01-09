@@ -87,6 +87,7 @@ GameObject:
   - component: {fileID: 6843757151258659966}
   - component: {fileID: 8490659466237057058}
   - component: {fileID: -1862814043862074014}
+  - component: {fileID: 9029689476980862932}
   m_Layer: 5
   m_Name: Cell
   m_TagString: Untagged
@@ -136,7 +137,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -166,3 +167,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _mainImage: {fileID: 8490659466237057058}
   _highlightColor: {r: 1, g: 0.94803953, b: 0.33490568, a: 1}
+--- !u!225 &9029689476980862932
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7965448592721729057}
+  m_Enabled: 0
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0

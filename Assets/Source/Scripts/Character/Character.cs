@@ -9,7 +9,9 @@ public class Character : MonoBehaviour, IDragHandler, IEndDragHandler, IBeginDra
     private RectTransform _rectTransform;
     private CanvasGroup _canvasGroup;
     private Transform _freeParent;
-    private Vector3 _currentPosition;
+    private Vector3 _currentGlobalPosition;
+
+    public Vector2Int GridPosition { get; private set; }
 
     private void Awake()
     {
@@ -22,10 +24,12 @@ public class Character : MonoBehaviour, IDragHandler, IEndDragHandler, IBeginDra
         _freeParent = parent;
     }
 
-    public void SetPosition(Vector3 postition)
+    public void SetPosition(Vector3 postition, Vector2Int gridPosition)
     {
-        _currentPosition = postition;
-        transform.position = _currentPosition;
+        _currentGlobalPosition = postition;
+        GridPosition = gridPosition;
+
+        transform.position = _currentGlobalPosition;
     }
 
     public void SetPlayerColor()
@@ -47,7 +51,7 @@ public class Character : MonoBehaviour, IDragHandler, IEndDragHandler, IBeginDra
     {
         _canvasGroup.blocksRaycasts = true;
 
-        transform.position = _currentPosition;
+        transform.position = _currentGlobalPosition;
     }
 
     public void OnDrag(PointerEventData eventData)

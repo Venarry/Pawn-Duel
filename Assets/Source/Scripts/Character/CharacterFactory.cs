@@ -4,7 +4,7 @@ public class CharacterFactory
 {
     private readonly Character _prefab = Resources.Load<Character>(ResourcesPath.Character);
 
-    public Character Create(Vector3 position, Transform parent, bool isPlayerColor)
+    public Character Create(Vector3 position, Vector2Int gridPosition, Transform parent, bool isPlayerColor)
     {
         Character character = Object.Instantiate(_prefab, position, Quaternion.identity, parent);
 
@@ -18,7 +18,7 @@ public class CharacterFactory
         }
 
         character.Init(parent);
-        character.SetPosition(position);
+        character.SetPosition(position, gridPosition);
 
         return character;
     }

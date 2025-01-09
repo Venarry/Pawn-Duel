@@ -10,9 +10,6 @@ public class LevelCycleHandler : MonoBehaviour
     private Character _player;
     private Character _enemy;
 
-    private Vector2Int _playerPosition;
-    private Vector2Int _enemyPosition;
-
     private CharacterFactory _characterFactory;
 
     private LevelSpawner _levelSpawner;
@@ -46,18 +43,8 @@ public class LevelCycleHandler : MonoBehaviour
 
         if (_player == null)
         {
-            /*_player = Instantiate(_characterPrefab, playerSpawnPosition, Quaternion.identity, _characterParent);
-            _player.SetPlayerColor();
-            _player.Init(_canvas.transform);
-            _player.SetPosition(playerSpawnPosition);
-
-            _enemy = Instantiate(_characterPrefab, enemySpawnPosition, Quaternion.identity, _characterParent);
-            _enemy.SetEnemyColor();
-            _enemy.Init(_canvas.transform);
-            _enemy.SetPosition(enemySpawnPosition);*/
-
-            _player = _characterFactory.Create(playerSpawnPosition, _canvas.transform, isPlayerColor: true);
-            _enemy = _characterFactory.Create(enemySpawnPosition, _canvas.transform, isPlayerColor: false);
+            _player = _characterFactory.Create(playerSpawnPosition, playerSpawnCellIndex, _canvas.transform, isPlayerColor: true);
+            _enemy = _characterFactory.Create(enemySpawnPosition, enemySpawnCellIndex, _canvas.transform, isPlayerColor: false);
         }
         else
         {
@@ -65,10 +52,7 @@ public class LevelCycleHandler : MonoBehaviour
             _enemy.transform.position = enemySpawnPosition;
         }
 
-        _playerPosition = playerSpawnCellIndex;
-        _enemyPosition = enemySpawnCellIndex;
-
-        foreach (Cell item in GetAvailableCellsForMove(cells, _playerPosition))
+        foreach (Cell item in GetAvailableCellsForMove(cells, _player.GridPosition))
         {
             item.HighlightCell();
         } 
