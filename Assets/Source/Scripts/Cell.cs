@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class Cell : MonoBehaviour, IDropHandler
 {
     [SerializeField] private Image _mainImage;
+    [SerializeField] private Image _winImage;
     [SerializeField] private Color _highlightColor = Color.yellow;
 
     private Color _startColor;
@@ -12,10 +13,28 @@ public class Cell : MonoBehaviour, IDropHandler
     
     public Vector2Int GridPosition { get; private set; } = Vector2Int.zero;
     public bool IsBlocked { get; private set; } = false;
+    public bool IsPlayerWinCondition { get; private set; } = false;
+    public bool IsEnemyWinCondition { get; private set; } = false;
 
     private void Awake()
     {
         _startColor = _mainImage.color;
+    }
+
+    public void SetWinCondition(bool isPlayerWinCell)
+    {
+        _winImage.enabled = true;
+
+        if (isPlayerWinCell == true)
+        {
+            IsPlayerWinCondition = true;
+            _winImage.color = GameSettings.PlayerColor;
+        }
+        else
+        {
+            IsEnemyWinCondition = true;
+            _winImage.color = GameSettings.EnemyColor;
+        }
     }
 
     public void SetGridPosition(Vector2Int position)

@@ -48,13 +48,23 @@ public class LevelSpawner : MonoBehaviour
             for (int j = 0; j < currentLevel.Size.x; j++)
             {
                 Cell cell = Instantiate(_cellPrefab, _grid.transform);
+                cell.SetGridPosition(new Vector2Int(i, j));
 
-                if(currentLevel.BlockedCells.Contains(new Vector2Int(j + 1, i + 1)))
+                if(i == 0)
+                {
+                    cell.SetWinCondition(isPlayerWinCell: true);
+                }
+                
+                if(i == currentLevel.Size.y - 1)
+                {
+                    cell.SetWinCondition(isPlayerWinCell: false);
+                }
+
+                if (currentLevel.BlockedCells.Contains(new Vector2Int(j + 1, i + 1)))
                 {
                     cell.Block();
                 }
 
-                cell.SetGridPosition(new Vector2Int(i, j));
                 _venarryGrid.AddElement(cell.GetComponent<RectTransform>());
 
                 _cells.Add(new Vector2Int(i, j), cell);

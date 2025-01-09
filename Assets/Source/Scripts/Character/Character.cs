@@ -10,6 +10,7 @@ public class Character : MonoBehaviour, IDragHandler, IEndDragHandler, IBeginDra
     private CanvasGroup _canvasGroup;
     private Transform _freeParent;
     private Vector3 _currentGlobalPosition;
+    private bool _isPlayer = false;
 
     public Vector2Int GridPosition { get; private set; }
 
@@ -19,9 +20,19 @@ public class Character : MonoBehaviour, IDragHandler, IEndDragHandler, IBeginDra
         _canvasGroup = GetComponent<CanvasGroup>();
     }
 
-    public void Init(Transform parent)
+    public void Init(Transform parent, bool isPlayer)
     {
         _freeParent = parent;
+        _isPlayer = isPlayer;
+
+        if(_isPlayer == true)
+        {
+            SetPlayerColor();
+        }
+        else
+        {
+            SetEnemyColor();
+        }
     }
 
     public void SetPosition(Vector3 postition, Vector2Int gridPosition)
@@ -32,23 +43,31 @@ public class Character : MonoBehaviour, IDragHandler, IEndDragHandler, IBeginDra
         transform.position = _currentGlobalPosition;
     }
 
-    public void SetPlayerColor()
+    private void SetPlayerColor()
     {
         _mainColor.color = GameSettings.PlayerColor;
+        _isPlayer = true;
     }
 
-    public void SetEnemyColor()
+    private void SetEnemyColor()
     {
         _mainColor.color = GameSettings.EnemyColor;
+        _isPlayer = false;
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        if (_isPlayer == false)
+            return;
+
         _canvasGroup.blocksRaycasts = false;
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        if (_isPlayer == false)
+            return;
+
         _canvasGroup.blocksRaycasts = true;
 
         transform.position = _currentGlobalPosition;
@@ -56,6 +75,9 @@ public class Character : MonoBehaviour, IDragHandler, IEndDragHandler, IBeginDra
 
     public void OnDrag(PointerEventData eventData)
     {
+        if (_isPlayer == false)
+            return;
+
         _rectTransform.anchoredPosition +=
             eventData.delta / _freeParent.localScale.x;
     }

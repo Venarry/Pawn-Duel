@@ -32,30 +32,36 @@ public class LevelCycleHandler : MonoBehaviour
 
     private void OnLevelSpawn(Dictionary<Vector2Int, Cell> cells, LevelData levelData)
     {
+        SpawnCharacters(cells, levelData);
+
+    }
+
+    private void SpawnCharacters(Dictionary<Vector2Int, Cell> cells, LevelData levelData)
+    {
         //Vector3 playerSpawnPosition = cells[new Vector2Int(levelData.Size.y - 1, (levelData.Size.x - 1) / 2)].transform.position;
         //Vector3 enemySpawnPosition = cells[new Vector2Int(0, (levelData.Size.x - 1) / 2)].transform.position;
 
-        Vector2Int playerSpawnCellIndex = new Vector2Int(levelData.PlayerSpawnPosition.y - 1, levelData.PlayerSpawnPosition.x - 1);
-        Vector2Int enemySpawnCellIndex = new Vector2Int(levelData.EnemySpawnPosition.y - 1, levelData.EnemySpawnPosition.x - 1);
+        Vector2Int playerSpawnCellIndex = new(levelData.PlayerSpawnPosition.y - 1, levelData.PlayerSpawnPosition.x - 1);
+        Vector2Int enemySpawnCellIndex = new(levelData.EnemySpawnPosition.y - 1, levelData.EnemySpawnPosition.x - 1);
 
         Vector3 playerSpawnPosition = cells[playerSpawnCellIndex].transform.position;
         Vector3 enemySpawnPosition = cells[enemySpawnCellIndex].transform.position;
 
         if (_player == null)
         {
-            _player = _characterFactory.Create(playerSpawnPosition, playerSpawnCellIndex, _canvas.transform, isPlayerColor: true);
-            _enemy = _characterFactory.Create(enemySpawnPosition, enemySpawnCellIndex, _canvas.transform, isPlayerColor: false);
+            _player = _characterFactory.Create(playerSpawnPosition, playerSpawnCellIndex, _canvas.transform, isPlayer: true);
+            _enemy = _characterFactory.Create(enemySpawnPosition, enemySpawnCellIndex, _canvas.transform, isPlayer: false);
         }
         else
         {
-            _player.transform.position = playerSpawnPosition;
-            _enemy.transform.position = enemySpawnPosition;
+            _player.SetPosition(playerSpawnPosition, playerSpawnCellIndex);
+            _enemy.SetPosition(enemySpawnPosition, enemySpawnCellIndex);
         }
 
         foreach (Cell item in GetAvailableCellsForMove(cells, _player.GridPosition))
         {
             item.HighlightCell();
-        } 
+        }
     }
 
     private Cell[] GetAvailableCellsForMove(Dictionary<Vector2Int, Cell> source, Vector2Int movePosition)
