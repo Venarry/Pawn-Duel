@@ -1,12 +1,11 @@
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class LevelCycleHandler : MonoBehaviour
 {
     [SerializeField] private Character _characterPrefab;
     [SerializeField] private Transform _characterParent;
+    [SerializeField] private Canvas _canvas;
 
     private Character _player;
     private Character _enemy;
@@ -14,11 +13,14 @@ public class LevelCycleHandler : MonoBehaviour
     private Vector2Int _playerPosition;
     private Vector2Int _enemyPosition;
 
+    private CharacterFactory _characterFactory;
+
     private LevelSpawner _levelSpawner;
 
     public void Init(LevelSpawner levelSpawner)
     {
         _levelSpawner = levelSpawner;
+        _characterFactory = new();
     }
 
     public void Enable()
@@ -44,11 +46,18 @@ public class LevelCycleHandler : MonoBehaviour
 
         if (_player == null)
         {
-            _player = Instantiate(_characterPrefab, playerSpawnPosition, Quaternion.identity, _characterParent);
+            /*_player = Instantiate(_characterPrefab, playerSpawnPosition, Quaternion.identity, _characterParent);
             _player.SetPlayerColor();
+            _player.Init(_canvas.transform);
+            _player.SetPosition(playerSpawnPosition);
 
             _enemy = Instantiate(_characterPrefab, enemySpawnPosition, Quaternion.identity, _characterParent);
             _enemy.SetEnemyColor();
+            _enemy.Init(_canvas.transform);
+            _enemy.SetPosition(enemySpawnPosition);*/
+
+            _player = _characterFactory.Create(playerSpawnPosition, _canvas.transform, isPlayerColor: true);
+            _enemy = _characterFactory.Create(enemySpawnPosition, _canvas.transform, isPlayerColor: false);
         }
         else
         {
@@ -91,7 +100,12 @@ public class LevelCycleHandler : MonoBehaviour
                 continue;
             }
 
-            if (Mathf.Abs(movePosition.x - currentCellPosition.x) > moveDistance || Mathf.Abs(movePosition.y - currentCellPosition.y) > moveDistance)
+            if(Mathf.Abs(movePosition.y - currentCellPosition.y) > moveDistance)
+            {
+                continue;
+            }
+
+            if (Mathf.Abs(movePosition.x - currentCellPosition.x) > moveDistance)
             {
                 continue;
             }

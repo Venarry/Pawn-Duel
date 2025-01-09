@@ -43,9 +43,9 @@ public class LevelSpawner : MonoBehaviour
         LevelData currentLevel = _levels[_activeLevelIndex];
         _venarryGrid = new(_grid, currentLevel.Size.x, _cellSize, _spacing, _padding, VenarryGrid.Alignment.Center);
 
-        for (int i = 0; i < currentLevel.Size.x; i++)
+        for (int i = 0; i < currentLevel.Size.y; i++)
         {
-            for (int j = 0; j < currentLevel.Size.y; j++)
+            for (int j = 0; j < currentLevel.Size.x; j++)
             {
                 Cell cell = Instantiate(_cellPrefab, _grid.transform);
 

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class Cell : MonoBehaviour
@@ -9,7 +10,7 @@ public class Cell : MonoBehaviour
     [SerializeField] private Color _highlightColor = Color.yellow;
 
     private Color _startColor;
-
+    
     public Vector2Int Position { get; private set; } = Vector2Int.zero;
     public bool IsBlocked { get; private set; } = false;
 

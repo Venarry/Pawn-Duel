@@ -289,6 +289,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _characterPrefab: {fileID: -2648723751043528100, guid: 5ea8b63769a49d245bac92b7ac7a8dc7, type: 3}
   _characterParent: {fileID: 1683525136}
+  _canvas: {fileID: 1683525135}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -602,7 +603,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _levelsData:
-  - Size: {x: 7, y: 7}
+  - Size: {x: 7, y: 10}
     BlockedCells:
     - {x: 2, y: 5}
     PlayerSpawnPosition: {x: 4, y: 7}
