@@ -50,6 +50,8 @@ public class LevelSpawner : MonoBehaviour
         _horizontalBarriersButton.SetLevelData(currentLevel.HorizontalBarriersCount);
         _verticalBarriersButton.SetLevelData(currentLevel.VerticalBarriersCount);
 
+        _levelBarriersModel.InitLevel(currentLevel.Size.y, currentLevel.Size.x);
+
         for (int i = 0; i < currentLevel.Size.y; i++)
         {
             for (int j = 0; j < currentLevel.Size.x; j++)

@@ -95,10 +95,13 @@ public class Cell : MonoBehaviour, IDropHandler, IPointerEnterHandler
         {
             BarrierOrientration barrierOrientration = barrierButtonHandler.Orientration;
             
-            if (barrierButtonHandler.TryDecreaseBarrier() == true)
+            if (barrierButtonHandler.HasBarriers == true)
             {
-                _levelBarriersModel.Add(GridPosition, barrierOrientration);
-                _playerStepHandler.RefreshLights();
+                if(_levelBarriersModel.TryAdd(GridPosition, barrierOrientration))
+                {
+                    _playerStepHandler.RefreshLights();
+                    barrierButtonHandler.TryDecreaseBarrier();
+                }
             }
         }
     }

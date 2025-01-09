@@ -21,35 +21,41 @@ public class LevelBarriersModel
         _columnsCount = columnsCount;
     }
 
-    public void Add(Vector2Int gridPosition, BarrierOrientration barrierOrientration)
+    public bool TryAdd(Vector2Int gridPosition, BarrierOrientration barrierOrientration)
     {
-        ApplyWalls(
+        if(ApplyWalls(
             gridPosition, barrierOrientration,
             out Vector2 firstWall,
             out Vector2 secondWall,
             out Vector2Int secondCellPosition,
-            out Vector2Int thirdCellPosition);
+            out Vector2Int thirdCellPosition))
+        {
+            //BarrierData barrierData = new(firstWall, secondWall);
+            _barriers.Add(firstWall);
+            _barriers.Add(secondWall);
 
-        //BarrierData barrierData = new(firstWall, secondWall);
-        _barriers.Add(firstWall);
-        _barriers.Add(secondWall);
+            BarrierAdd?.Invoke(gridPosition, secondCellPosition, thirdCellPosition, firstWall, secondWall, barrierOrientration);
 
-        BarrierAdd?.Invoke(gridPosition, secondCellPosition, thirdCellPosition, firstWall, secondWall, barrierOrientration);
+            return true;
+        }
+
+        return false;
     }
 
     public void TryApplyProjection(Vector2Int gridPosition, BarrierOrientration barrierOrientration)
     {
-        ApplyWalls(
+        if(ApplyWalls(
             gridPosition, barrierOrientration,
             out Vector2 firstWall,
             out Vector2 secondWall,
             out Vector2Int secondCellPosition,
-            out Vector2Int thirdCellPosition);
-
-        ProjectionSet?.Invoke(gridPosition, secondCellPosition, thirdCellPosition, firstWall, secondWall, barrierOrientration);
+            out Vector2Int thirdCellPosition))
+        {
+            ProjectionSet?.Invoke(gridPosition, secondCellPosition, thirdCellPosition, firstWall, secondWall, barrierOrientration);
+        }
     }
 
-    private void ApplyWalls(
+    private bool ApplyWalls(
         Vector2Int gridPosition,
         BarrierOrientration barrierOrientration,
         out Vector2 firstWall,
@@ -73,5 +79,10 @@ public class LevelBarriersModel
             secondCellPosition = new Vector2Int(gridPosition.x + 1, gridPosition.y);
             thirdCellPosition = new Vector2Int(gridPosition.x + 1, gridPosition.y + 1);
         }
+
+        if (gridPosition.x >= _rowCount - 1 || gridPosition.y >= _columnsCount - 1)
+            return false;
+
+        return true;
     }
 }
