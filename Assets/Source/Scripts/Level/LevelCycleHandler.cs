@@ -3,16 +3,16 @@ using UnityEngine;
 
 public class LevelCycleHandler : MonoBehaviour
 {
+    [SerializeField] private PlayerStepHandler _playerStepHandler;
     [SerializeField] private Character _characterPrefab;
     [SerializeField] private Transform _characterParent;
     [SerializeField] private Canvas _canvas;
 
     private Character _player;
     private Character _enemy;
-
     private CharacterFactory _characterFactory;
-
     private LevelSpawner _levelSpawner;
+    private Dictionary<Vector2Int, Cell> _cells;
 
     public void Init(LevelSpawner levelSpawner)
     {
@@ -23,20 +23,23 @@ public class LevelCycleHandler : MonoBehaviour
     public void Enable()
     {
         _levelSpawner.LevelSpawned += OnLevelSpawn;
+        _playerStepHandler.StepEnded += OnStepEnded;
     }
 
     public void Disable()
     {
         _levelSpawner.LevelSpawned -= OnLevelSpawn;
+        _playerStepHandler.StepEnded -= OnStepEnded;
     }
 
     private void OnLevelSpawn(Dictionary<Vector2Int, Cell> cells, LevelData levelData)
     {
-        SpawnCharacters(cells, levelData);
-
+        _cells = cells;
+        SpawnCharacters(levelData);
+        _playerStepHandler.StartStep(_cells, _player);
     }
 
-    private void SpawnCharacters(Dictionary<Vector2Int, Cell> cells, LevelData levelData)
+    private void SpawnCharacters(LevelData levelData)
     {
         //Vector3 playerSpawnPosition = cells[new Vector2Int(levelData.Size.y - 1, (levelData.Size.x - 1) / 2)].transform.position;
         //Vector3 enemySpawnPosition = cells[new Vector2Int(0, (levelData.Size.x - 1) / 2)].transform.position;
@@ -44,8 +47,8 @@ public class LevelCycleHandler : MonoBehaviour
         Vector2Int playerSpawnCellIndex = new(levelData.PlayerSpawnPosition.y - 1, levelData.PlayerSpawnPosition.x - 1);
         Vector2Int enemySpawnCellIndex = new(levelData.EnemySpawnPosition.y - 1, levelData.EnemySpawnPosition.x - 1);
 
-        Vector3 playerSpawnPosition = cells[playerSpawnCellIndex].transform.position;
-        Vector3 enemySpawnPosition = cells[enemySpawnCellIndex].transform.position;
+        Vector3 playerSpawnPosition = _cells[playerSpawnCellIndex].transform.position;
+        Vector3 enemySpawnPosition = _cells[enemySpawnCellIndex].transform.position;
 
         if (_player == null)
         {
@@ -57,52 +60,10 @@ public class LevelCycleHandler : MonoBehaviour
             _player.SetPosition(playerSpawnPosition, playerSpawnCellIndex);
             _enemy.SetPosition(enemySpawnPosition, enemySpawnCellIndex);
         }
-
-        foreach (Cell item in GetAvailableCellsForMove(cells, _player.GridPosition))
-        {
-            item.HighlightCell();
-        }
     }
 
-    private Cell[] GetAvailableCellsForMove(Dictionary<Vector2Int, Cell> source, Vector2Int movePosition)
+    private void OnStepEnded()
     {
-        List<Cell> availableCells = new();
-
-        foreach (KeyValuePair<Vector2Int, Cell> cell in source)
-        {
-            if(cell.Value.IsBlocked)
-            {
-                continue;
-            }
-
-            Vector2Int currentCellPosition = cell.Key;
-
-            if(movePosition == currentCellPosition)
-            {
-                continue;
-            }
-
-            //Debug.Log($"{movePosition} {currentCellPosition}; {movePosition.x - currentCellPosition.x} {movePosition.y - currentCellPosition.y}");
-            int moveDistance = 1;
-
-            if(movePosition.x != currentCellPosition.x && movePosition.y != currentCellPosition.y)
-            {
-                continue;
-            }
-
-            if(Mathf.Abs(movePosition.y - currentCellPosition.y) > moveDistance)
-            {
-                continue;
-            }
-
-            if (Mathf.Abs(movePosition.x - currentCellPosition.x) > moveDistance)
-            {
-                continue;
-            }
-
-            availableCells.Add(cell.Value);
-        }
-
-        return availableCells.ToArray();
+        _playerStepHandler.StartStep(_cells, _player);
     }
 }

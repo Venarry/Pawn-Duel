@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -13,6 +14,8 @@ public class Character : MonoBehaviour, IDragHandler, IEndDragHandler, IBeginDra
     private bool _isPlayer = false;
 
     public Vector2Int GridPosition { get; private set; }
+
+    public event Action PositionChanged;
 
     private void Awake()
     {
@@ -41,6 +44,8 @@ public class Character : MonoBehaviour, IDragHandler, IEndDragHandler, IBeginDra
         GridPosition = gridPosition;
 
         transform.position = _currentGlobalPosition;
+
+        PositionChanged?.Invoke();
     }
 
     private void SetPlayerColor()
