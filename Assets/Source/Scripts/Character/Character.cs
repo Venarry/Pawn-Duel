@@ -27,8 +27,9 @@ public class Character : MonoBehaviour, IDragHandler, IEndDragHandler, IBeginDra
     {
         _freeParent = parent;
         _isPlayer = isPlayer;
+        _canvasGroup.blocksRaycasts = true;
 
-        if(_isPlayer == true)
+        if (_isPlayer == true)
         {
             SetPlayerColor();
         }
@@ -46,6 +47,11 @@ public class Character : MonoBehaviour, IDragHandler, IEndDragHandler, IBeginDra
         transform.position = _currentGlobalPosition;
 
         PositionChanged?.Invoke();
+    }
+
+    public void SetRaycastTarget(bool state)
+    {
+        _canvasGroup.blocksRaycasts = state;
     }
 
     private void SetPlayerColor()

@@ -32,6 +32,12 @@ public class LevelCycleHandler : MonoBehaviour
         _playerStepHandler.StepEnded -= OnStepEnded;
     }
 
+    public void SetCharactersRaycastTarget(bool state)
+    {
+        _player.SetRaycastTarget(state);
+        _enemy.SetRaycastTarget(state);
+    }
+
     private void OnLevelSpawn(Dictionary<Vector2Int, Cell> cells, LevelData levelData)
     {
         _cells = cells;

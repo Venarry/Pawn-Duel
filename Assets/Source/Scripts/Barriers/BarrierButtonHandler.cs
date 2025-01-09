@@ -7,6 +7,7 @@ public partial class BarrierButtonHandler : MonoBehaviour, IDragHandler, IEndDra
     [SerializeField] private TMP_Text _barriersCountLabel;
     [SerializeField] private GameObject _barrierPrefab;
     [SerializeField] private Transform _canvas;
+    [SerializeField] private LevelCycleHandler _levelCycleHandler;
 
     private int _barriersCount;
     private RectTransform _rectTransform;
@@ -28,6 +29,7 @@ public partial class BarrierButtonHandler : MonoBehaviour, IDragHandler, IEndDra
             return;
         }
 
+        _levelCycleHandler.SetCharactersRaycastTarget(state: false);
         _activeBarrier = Instantiate(_barrierPrefab, _canvas);
         _rectTransform = _activeBarrier.GetComponent<RectTransform>();
         _rectTransform.position = eventData.pressPosition;
@@ -59,7 +61,9 @@ public partial class BarrierButtonHandler : MonoBehaviour, IDragHandler, IEndDra
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        if(_activeBarrier != null)
+        _levelCycleHandler.SetCharactersRaycastTarget(state: true);
+
+        if (_activeBarrier != null)
         {
             Destroy(_activeBarrier);
             _activeBarrier = null;

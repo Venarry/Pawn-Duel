@@ -1106,6 +1106,7 @@ MonoBehaviour:
   _barriersCountLabel: {fileID: 604068371}
   _barrierPrefab: {fileID: 3517138785581744390, guid: 6cab683c407798441a951bcfe9452681, type: 3}
   _canvas: {fileID: 1683525136}
+  _levelCycleHandler: {fileID: 625000012}
   <Orientration>k__BackingField: 1
 --- !u!1 &1463937806
 GameObject:
@@ -1333,6 +1334,7 @@ MonoBehaviour:
   _barriersCountLabel: {fileID: 1014882030}
   _barrierPrefab: {fileID: 3517138785581744390, guid: 6cab683c407798441a951bcfe9452681, type: 3}
   _canvas: {fileID: 1683525136}
+  _levelCycleHandler: {fileID: 625000012}
   <Orientration>k__BackingField: 0
 --- !u!114 &1779255703
 MonoBehaviour:
