@@ -154,6 +154,8 @@ MonoBehaviour:
   _grid: {fileID: 236988268}
   _playerStepHandler: {fileID: 846031996}
   _cellPrefab: {fileID: -1862814043862074014, guid: f2e5fa8ea5e90844d82c1a32c00bfbb4, type: 3}
+  _horizontalBarriersButton: {fileID: 1137344503}
+  _verticalBarriersButton: {fileID: 1779255702}
 --- !u!4 &67918172
 Transform:
   m_ObjectHideFlags: 0
@@ -1004,10 +1006,14 @@ MonoBehaviour:
     - {x: 2, y: 5}
     PlayerSpawnPosition: {x: 4, y: 7}
     EnemySpawnPosition: {x: 4, y: 1}
+    VerticalBarriersCount: 15
+    HorizontalBarriersCount: 12
   - Size: {x: 0, y: 0}
     BlockedCells: []
     PlayerSpawnPosition: {x: 0, y: 0}
     EnemySpawnPosition: {x: 0, y: 0}
+    VerticalBarriersCount: 0
+    HorizontalBarriersCount: 0
 --- !u!1 &1137344498
 GameObject:
   m_ObjectHideFlags: 0
@@ -1021,7 +1027,7 @@ GameObject:
   - component: {fileID: 1137344501}
   - component: {fileID: 1137344503}
   m_Layer: 5
-  m_Name: Button
+  m_Name: HorizontalBarriersButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1097,6 +1103,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2ebd88394eaa5b4d8bd94f291070c2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _barriersCountLabel: {fileID: 604068371}
   _barrierPrefab: {fileID: 3517138785581744390, guid: 6cab683c407798441a951bcfe9452681, type: 3}
   _canvas: {fileID: 1683525136}
   <Orientration>k__BackingField: 1
@@ -1285,7 +1292,7 @@ GameObject:
   - component: {fileID: 1779255703}
   - component: {fileID: 1779255702}
   m_Layer: 5
-  m_Name: Button (1)
+  m_Name: VerticalBarriersButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1323,6 +1330,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2ebd88394eaa5b4d8bd94f291070c2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _barriersCountLabel: {fileID: 1014882030}
   _barrierPrefab: {fileID: 3517138785581744390, guid: 6cab683c407798441a951bcfe9452681, type: 3}
   _canvas: {fileID: 1683525136}
   <Orientration>k__BackingField: 0

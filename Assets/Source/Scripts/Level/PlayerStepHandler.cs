@@ -72,11 +72,6 @@ public class PlayerStepHandler : MonoBehaviour
         List<Cell> availableCells = new();
         Vector2[] barriers = _levelBarriersModel.Barriers;
 
-        foreach (Vector2 item in barriers)
-        {
-            Debug.Log(item);
-        }
-
         foreach (KeyValuePair<Vector2Int, Cell> cell in source)
         {
             if (cell.Value.IsBlocked)

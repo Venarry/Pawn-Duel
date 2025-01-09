@@ -94,8 +94,12 @@ public class Cell : MonoBehaviour, IDropHandler, IPointerEnterHandler
         if (eventData.pointerDrag.TryGetComponent(out BarrierButtonHandler barrierButtonHandler))
         {
             BarrierOrientration barrierOrientration = barrierButtonHandler.Orientration;
-            _levelBarriersModel.Add(GridPosition, barrierOrientration);
-            _playerStepHandler.RefreshLights();
+            
+            if (barrierButtonHandler.TryDecreaseBarrier() == true)
+            {
+                _levelBarriersModel.Add(GridPosition, barrierOrientration);
+                _playerStepHandler.RefreshLights();
+            }
         }
     }
 
@@ -106,8 +110,11 @@ public class Cell : MonoBehaviour, IDropHandler, IPointerEnterHandler
 
         if(eventData.pointerDrag.TryGetComponent(out BarrierButtonHandler barrierButtonHandler))
         {
-            BarrierOrientration barrierOrientration = barrierButtonHandler.Orientration;
-            _levelBarriersModel.TryApplyProjection(GridPosition, barrierOrientration);
+            if (barrierButtonHandler.HasBarriers == true)
+            {
+                BarrierOrientration barrierOrientration = barrierButtonHandler.Orientration;
+                _levelBarriersModel.TryApplyProjection(GridPosition, barrierOrientration);
+            }
         }
     }
 }

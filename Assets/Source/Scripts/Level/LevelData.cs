@@ -9,4 +9,6 @@ public class LevelData
     public List<Vector2Int> BlockedCells;
     public Vector2Int PlayerSpawnPosition;
     public Vector2Int EnemySpawnPosition;
+    public int VerticalBarriersCount = 0;
+    public int HorizontalBarriersCount = 0;
 }

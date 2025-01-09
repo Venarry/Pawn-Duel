@@ -9,6 +9,9 @@ public class LevelSpawner : MonoBehaviour
     [SerializeField] private PlayerStepHandler _playerStepHandler;
     [SerializeField] private Cell _cellPrefab;
 
+    [SerializeField] private BarrierButtonHandler _horizontalBarriersButton;
+    [SerializeField] private BarrierButtonHandler _verticalBarriersButton;
+
     private LevelBarriersModel _levelBarriersModel;
     private readonly Dictionary<Vector2Int, Cell> _cells = new();
     private RectOffset _padding;
@@ -43,6 +46,9 @@ public class LevelSpawner : MonoBehaviour
 
         LevelData currentLevel = _levels[_activeLevelIndex];
         _venarryGrid = new(_grid, currentLevel.Size.x, CellSize, Spacing, _padding, VenarryGrid.Alignment.Center);
+
+        _horizontalBarriersButton.SetLevelData(currentLevel.HorizontalBarriersCount);
+        _verticalBarriersButton.SetLevelData(currentLevel.VerticalBarriersCount);
 
         for (int i = 0; i < currentLevel.Size.y; i++)
         {
