@@ -153,15 +153,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _grid: {fileID: 236988268}
   _cellPrefab: {fileID: -1862814043862074014, guid: f2e5fa8ea5e90844d82c1a32c00bfbb4, type: 3}
-  _rowCount: 4
-  _columnsCount: 6
-  cellSize: {x: 100, y: 100}
-  spacing: {x: 10, y: 10}
-  padding:
-    m_Left: 0
-    m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
 --- !u!4 &67918172
 Transform:
   m_ObjectHideFlags: 0
@@ -296,7 +287,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9de5691f3cb247d43acd09e083c53cb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _characterPrefab: {fileID: 2712143596560935845, guid: 5ea8b63769a49d245bac92b7ac7a8dc7, type: 3}
+  _characterPrefab: {fileID: -2648723751043528100, guid: 5ea8b63769a49d245bac92b7ac7a8dc7, type: 3}
   _characterParent: {fileID: 1683525136}
 --- !u!1 &705507993
 GameObject:
@@ -423,6 +414,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _levelSpawner: {fileID: 67918171}
   _levelCycleHandler: {fileID: 625000012}
+  _levelsDataSource: {fileID: 1113134532}
 --- !u!4 &841819569
 Transform:
   m_ObjectHideFlags: 0
@@ -565,6 +557,60 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1113134530
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1113134531}
+  - component: {fileID: 1113134532}
+  m_Layer: 0
+  m_Name: LevelsDataSource
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1113134531
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1113134530}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1883124736}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1113134532
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1113134530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07d3be174e23d3545a26807f3da3af77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _levelsData:
+  - Size: {x: 7, y: 7}
+    BlockedCells:
+    - {x: 2, y: 5}
+    PlayerSpawnPosition: {x: 4, y: 7}
+    EnemySpawnPosition: {x: 4, y: 1}
+  - Size: {x: 0, y: 0}
+    BlockedCells: []
+    PlayerSpawnPosition: {x: 0, y: 0}
+    EnemySpawnPosition: {x: 0, y: 0}
 --- !u!1 &1463937806
 GameObject:
   m_ObjectHideFlags: 0
@@ -768,6 +814,7 @@ Transform:
   - {fileID: 841819569}
   - {fileID: 67918172}
   - {fileID: 625000011}
+  - {fileID: 1113134531}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
