@@ -84,14 +84,15 @@ public class Cell : MonoBehaviour, IDropHandler, IPointerEnterHandler
 
     public void OnDrop(PointerEventData eventData)
     {
-        if(_isActive == false)
-        {
-            return;
-        }
-
-        if (eventData.pointerDrag.TryGetComponent(out Character character))
+        if (eventData.pointerDrag.TryGetComponent(out Character character) && _isActive == true)
         {
             character.SetPosition(transform.position, GridPosition);
+        }
+
+        if (eventData.pointerDrag.TryGetComponent(out BarrierButtonHandler barrierButtonHandler))
+        {
+            BarrierOrientration barrierOrientration = barrierButtonHandler.Orientration;
+            _levelBarriersModel.Add(GridPosition, barrierOrientration);
         }
     }
 
@@ -103,8 +104,7 @@ public class Cell : MonoBehaviour, IDropHandler, IPointerEnterHandler
         if(eventData.pointerDrag.TryGetComponent(out BarrierButtonHandler barrierButtonHandler))
         {
             BarrierOrientration barrierOrientration = barrierButtonHandler.Orientration;
-            //_levelBarriersModel.Add(GridPosition, barrierOrientration);
-            _levelBarriersModel.TryAddProjection(GridPosition, barrierOrientration);
+            _levelBarriersModel.TryApplyProjection(GridPosition, barrierOrientration);
         }
     }
 }

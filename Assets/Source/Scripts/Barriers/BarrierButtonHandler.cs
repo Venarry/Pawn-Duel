@@ -14,7 +14,7 @@ public partial class BarrierButtonHandler : MonoBehaviour, IDragHandler, IEndDra
     {
         _activeBarrier = Instantiate(_barrierPrefab, _canvas);
         _activeBarrier.GetComponent<RectTransform>().position = eventData.pressPosition;
-        _activeBarrier.GetComponent<CanvasGroup>().blocksRaycasts = true;
+        //_activeBarrier.GetComponent<CanvasGroup>().blocksRaycasts = false;
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -24,7 +24,7 @@ public partial class BarrierButtonHandler : MonoBehaviour, IDragHandler, IEndDra
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        _activeBarrier.GetComponent<CanvasGroup>().blocksRaycasts = true;
+        //_activeBarrier.GetComponent<CanvasGroup>().blocksRaycasts = true;
 
         Destroy(_activeBarrier);
     }

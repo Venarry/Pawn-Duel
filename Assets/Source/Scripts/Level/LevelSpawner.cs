@@ -10,13 +10,13 @@ public class LevelSpawner : MonoBehaviour
 
     private LevelBarriersModel _levelBarriersModel;
     private readonly Dictionary<Vector2Int, Cell> _cells = new();
-    private Vector2 _cellSize = new(100, 100);
-    private Vector2 _spacing = new(10, 10);
     private RectOffset _padding;
     private VenarryGrid _venarryGrid;
     private LevelData[] _levels;
     private int _activeLevelIndex = 0;
 
+    public Vector2 CellSize { get; private set; } = new(100, 100);
+    public Vector2 Spacing { get; private set; } = new(10, 10);
     public Dictionary<Vector2Int, Cell> Cells => _cells.ToDictionary(c => c.Key, s => s.Value);
 
     public event Action<Dictionary<Vector2Int, Cell>, LevelData> LevelSpawned;
@@ -41,7 +41,7 @@ public class LevelSpawner : MonoBehaviour
         }
 
         LevelData currentLevel = _levels[_activeLevelIndex];
-        _venarryGrid = new(_grid, currentLevel.Size.x, _cellSize, _spacing, _padding, VenarryGrid.Alignment.Center);
+        _venarryGrid = new(_grid, currentLevel.Size.x, CellSize, Spacing, _padding, VenarryGrid.Alignment.Center);
 
         for (int i = 0; i < currentLevel.Size.y; i++)
         {
